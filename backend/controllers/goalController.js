@@ -12,10 +12,10 @@ const getGoals = asyncHandler(async (req, res) => {
   res.status(200).json(goals)
 })
 
-// @desc    Set goal
+// @desc    Add goal
 // @route   POST /api/goals
 // @access  Private
-const setGoal = asyncHandler(async (req, res) => {
+const addGoal = asyncHandler(async (req, res) => {
   if (!req.body.text) {
     res.status(400)
     throw new Error('Please add a text field')
@@ -34,7 +34,7 @@ const setGoal = asyncHandler(async (req, res) => {
 // @access  Private
 const updateGoal = asyncHandler(async (req, res) => {
   const goal = await Goal.findById(req.params.id)
-
+  
   if (!goal) {
     res.status(400)
     throw new Error('Goal not found')
@@ -89,7 +89,7 @@ const deleteGoal = asyncHandler(async (req, res) => {
 
 module.exports = {
   getGoals,
-  setGoal,
+  addGoal,
   updateGoal,
   deleteGoal,
 }

@@ -97,6 +97,11 @@ h3 {
   margin: 10px 0;
   padding: 20px 0 10px;
   position: relative;
+  /* cursor: pointer; */
+}
+
+.goal:hover {
+  /* background-color: #c4c4c4; */
 }
 
 .goal .close {

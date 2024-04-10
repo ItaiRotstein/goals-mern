@@ -8,13 +8,14 @@ import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const { user } = useSelector((state) => state.auth);
 
   const onLogout = () => {
-    dispatch(logout())
-    dispatch(reset())
-    navigate('/')
-  }
+    dispatch(logout());
+    dispatch(reset());
+    navigate("/login");
+  };
 
   return (
     <header className="header">
