@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import goalService from "./goalService";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import goalService from './goalService';
 
 const initialState = {
   goals: [],
@@ -8,12 +8,12 @@ const initialState = {
   isSuccess: false,
   isLoading: false,
   isEditMode: false,
-  message: "",
+  message: '',
 };
 
 //Get user goals
 export const getGoals = createAsyncThunk(
-  "goals/getGoals",
+  'goals/getGoals',
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -32,7 +32,7 @@ export const getGoals = createAsyncThunk(
 
 //Get user goal by ID
 export const getGoalById = createAsyncThunk(
-  "goals/getGoalById",
+  'goals/getGoalById',
   async (goalId, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -51,7 +51,7 @@ export const getGoalById = createAsyncThunk(
 
 //Add goal
 export const addGoal = createAsyncThunk(
-  "goals/addGoal",
+  'goals/addGoal',
   async (goal, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -70,7 +70,7 @@ export const addGoal = createAsyncThunk(
 
 //Update goal
 export const updateGoal = createAsyncThunk(
-  "goals/updateGoal",
+  'goals/updateGoal',
   async (goal, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -89,7 +89,7 @@ export const updateGoal = createAsyncThunk(
 
 //Delete goal
 export const deleteGoal = createAsyncThunk(
-  "goals/deleteGoal",
+  'goals/deleteGoal',
   async (goalId, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -107,10 +107,17 @@ export const deleteGoal = createAsyncThunk(
 );
 
 export const goalSlice = createSlice({
-  name: "goals",
+  name: 'goals',
   initialState,
   reducers: {
-    reset: (state) => initialState,
+    reset: (state) => {
+      state.goals = [];
+      state.isError = false;
+      state.isSuccess = false;
+      state.isLoading = false;
+      state.isEditMode = false;
+      state.message = '';
+    },
   },
   extraReducers: (builder) => {
     builder

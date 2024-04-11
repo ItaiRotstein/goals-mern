@@ -1,11 +1,11 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { getGoals, reset } from "../features/goals/goalSlice";
-import GoalForm from "../components/GoalForm";
-import Spinner from "../components/Spinner";
-import GoalItem from "../components/GoalItem";
+import { getGoals, reset } from '../features/goals/goalSlice';
+import GoalForm from '../components/GoalForm';
+import Spinner from '../components/Spinner';
+import GoalItem from '../components/GoalItem';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const Dashboard = () => {
       console.log(message);
     }
 
-    if (!user) navigate("/login");
+    if (!user) navigate('/login');
     else {
       dispatch(getGoals());
     }

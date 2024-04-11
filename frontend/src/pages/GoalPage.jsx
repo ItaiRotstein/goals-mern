@@ -1,9 +1,14 @@
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 
-import { getGoalById, deleteGoal, reset, updateGoal } from "../features/goals/goalSlice";
-import Spinner from "../components/Spinner";
+import {
+  getGoalById,
+  deleteGoal,
+  reset,
+  updateGoal,
+} from '../features/goals/goalSlice';
+import Spinner from '../components/Spinner';
 import GoalEdit from '../components/GoalEdit';
 
 const GoalPage = () => {
@@ -15,14 +20,12 @@ const GoalPage = () => {
   const { user } = useSelector((state) => state.auth);
   const { id } = useParams();
 
-  const [goalText, setGoalText] = useState(selectedGoal.text);
-
   useEffect(() => {
     if (isError) {
       console.log(message);
     }
 
-    if (!user) navigate("/login");
+    if (!user) navigate('/login');
     else {
       dispatch(getGoalById(id));
     }
@@ -34,27 +37,25 @@ const GoalPage = () => {
 
   const handleDeleteButton = () => {
     dispatch(deleteGoal(selectedGoal._id));
-    navigate("/");
+    navigate('/');
   };
 
   const onUpdateGoal = (text) => {
     let newGoal = { ...selectedGoal };
     newGoal.text = text;
     dispatch(updateGoal(newGoal));
-    // dispatch(reset())
+    dispatch(reset());
   };
 
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  const handleInput = () => {};
-
   if (isLoading) return <Spinner />;
 
   return (
     <>
-      <Link to={"/"}>
+      <Link to={'/'}>
         <button className="btn">Back</button>
       </Link>
       <section className="heading">
@@ -64,8 +65,8 @@ const GoalPage = () => {
       {/* <GoalForm /> */}
       <section className="content">
         <div className="goal">
-          <div>{new Date(selectedGoal.createdAt).toLocaleString("en-GB")}</div>
-          <GoalEdit goalText={selectedGoal} onUpdateGoal={onUpdateGoal}/>
+          <div>{new Date(selectedGoal.createdAt).toLocaleString('en-GB')}</div>
+          <GoalEdit goalText={selectedGoal.text} onUpdateGoal={onUpdateGoal} />
           <button className="close" onClick={handleDeleteButton}>
             X
           </button>

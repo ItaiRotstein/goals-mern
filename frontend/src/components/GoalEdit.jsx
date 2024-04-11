@@ -1,32 +1,14 @@
-import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useRef, useState, useEffect } from 'react';
 
-import { updateGoal, reset } from "../features/goals/goalSlice";
-
-const GoalEdit = ({onUpdateGoal}) => {
-  const { selectedGoal, isError, message } = useSelector((state) => state.goals);
-  const { user } = useSelector((state) => state.auth);
-
-  const [text, setText] = useState(selectedGoal.text);
-  const [isEdit, setIsEdit] = useState(false);
+const GoalEdit = ({ goalText, onUpdateGoal }) => {
   const inputRef = useRef();
-  const dispatch = useDispatch();
 
-//   useEffect(() => {
-//     isEdit && inputRef.current.focus();
-//     if (isError) {
-//       console.log(message);
-//     }
+  const [text, setText] = useState(goalText);
+  const [isEdit, setIsEdit] = useState(false);
 
-//     if (!user) navigate("/login");
-//     else {
-//       dispatch(updateGoal(id));
-//     }
-
-//     return () => {
-//       dispatch(reset());
-//     };
-//   }, [user, isError, message, dispatch, isEdit]);
+  useEffect(() => {
+    isEdit && inputRef.current.focus();
+  }, [isEdit]);
 
   const onHandleChange = (e) => {
     setText(e.target.value);
@@ -42,10 +24,8 @@ const GoalEdit = ({onUpdateGoal}) => {
   const onHandleSubmit = (e) => {
     if (e.target.value) e.preventDefault();
     onUpdateGoal(e.target.value);
-    setIsEdit(false)
+    setIsEdit(false);
   };
-
-  
 
   return (
     <div className="goal-edit">
