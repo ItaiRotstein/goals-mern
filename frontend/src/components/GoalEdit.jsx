@@ -1,14 +1,14 @@
 import { useRef, useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
-const GoalEdit = ({ goalText, onUpdateGoal }) => {
+const GoalEdit = ({ goalText, onUpdateGoal, isEditShow, setIsEditShow }) => {
   const inputRef = useRef();
 
   const [text, setText] = useState(goalText);
-  const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
-    isEdit && inputRef.current.focus();
-  }, [isEdit]);
+    isEditShow && inputRef.current.focus();
+  }, [isEditShow]);
 
   const onHandleChange = (e) => {
     setText(e.target.value);
@@ -23,13 +23,17 @@ const GoalEdit = ({ goalText, onUpdateGoal }) => {
 
   const onHandleSubmit = (e) => {
     if (e.target.value) e.preventDefault();
+    if (text === '') {
+      toast.error('Please add text');
+      return;
+    }
     onUpdateGoal(e.target.value);
-    setIsEdit(false);
+    setIsEditShow(false);
   };
 
   return (
     <div className="goal-edit">
-      {isEdit && (
+      {isEditShow && (
         <input
           ref={inputRef}
           dir="auto"
@@ -40,7 +44,7 @@ const GoalEdit = ({ goalText, onUpdateGoal }) => {
           onBlur={onHandleSubmit}
         />
       )}
-      {!isEdit && <p onClick={() => setIsEdit(true)}>{text}</p>}
+      {!isEditShow && <p>{text}</p>}
     </div>
   );
 };

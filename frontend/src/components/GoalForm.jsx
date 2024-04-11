@@ -1,19 +1,27 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
+import {toast} from 'react-toastify'
+
 import { addGoal } from "../features/goals/goalSlice";
 
-const GoalForm = () => {
+const GoalForm = ({setGoalFormShow}) => {
   const [text, setText] = useState("");
 
   const dispatch = useDispatch();
 
   const onSubmit = (e) => {
     e.preventDefault();
+    if (text === '') {
+      toast.error('Please add text')
+      return
+  }
     const newGoal = {
       text,
     };
     dispatch(addGoal(newGoal));
+    toast.success('Goal addded successfuly')
+    setGoalFormShow(false)
   };
 
   return (

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -15,6 +15,8 @@ const Dashboard = () => {
   const { goals, isLoading, isError, message } = useSelector(
     (state) => state.goals
   );
+
+  const [isGoalFormShow, setGoalFormShow] = useState(false);
 
   useEffect(() => {
     if (isError) {
@@ -43,7 +45,12 @@ const Dashboard = () => {
         <h1>Welcome {user && capitalizeFirstLetter(user.name)}</h1>
         <p>Goals Dashboard</p>
       </section>
-      <GoalForm />
+      {!isGoalFormShow && (
+        <button className="btn btn-block" onClick={() => setGoalFormShow(true)}>
+          Add Goal
+        </button>
+      )}
+      {isGoalFormShow && <GoalForm setGoalFormShow={setGoalFormShow} />}
       <section className="content">
         {goals.length <= 0 && <h3>No goals here yet...</h3>}
         {goals.map((goal) => (

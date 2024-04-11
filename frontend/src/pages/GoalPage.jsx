@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 
@@ -19,6 +19,8 @@ const GoalPage = () => {
   );
   const { user } = useSelector((state) => state.auth);
   const { id } = useParams();
+
+  const [isEditShow, setIsEditShow] = useState(false);
 
   useEffect(() => {
     if (isError) {
@@ -62,11 +64,15 @@ const GoalPage = () => {
         <h1>{capitalizeFirstLetter(user.name)}'s Goals</h1>
         <p>Goal details</p>
       </section>
-      {/* <GoalForm /> */}
       <section className="content">
-        <div className="goal">
+        <div className="goal" onClick={() => setIsEditShow(true)}>
           <div>{new Date(selectedGoal.createdAt).toLocaleString('en-GB')}</div>
-          <GoalEdit goalText={selectedGoal.text} onUpdateGoal={onUpdateGoal} />
+          <GoalEdit
+            goalText={selectedGoal.text}
+            onUpdateGoal={onUpdateGoal}
+            isEditShow={isEditShow}
+            setIsEditShow={setIsEditShow}
+          />
           <button className="close" onClick={handleDeleteButton}>
             X
           </button>
